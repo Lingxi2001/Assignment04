@@ -10,9 +10,13 @@ format:
     embed-resources: true
 ---
 
-## Quarto
+## Research question
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+The Paris Agreement was adopted at the 21st United Nations Climate Change Conference (COP21) on December 12, 2015. Since then, the world has accelerated its path for energy transition. Our interest lies in the specific and important component of world energy, electricity. We want to examine how different countries generate electricity before and after 3 years of the adoption of The Paris Agreement.
+
+## Data resource
+
+We refer to the energy data set from Our World In Data to analyze the question. The resource link is: <https://ourworldindata.org/explorers/energy>
 
 ## Running Code
 
