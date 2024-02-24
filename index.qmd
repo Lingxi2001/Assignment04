@@ -12,7 +12,9 @@ format:
 
 ## Research question
 
-The Paris Agreement was adopted at the 21st United Nations Climate Change Conference (COP21) on December 12, 2015. Since then, the world has accelerated its path for energy transition. Our interest lies in the specific and important component of world energy, electricity. We want to examine how different countries generate electricity before and after 3 years of the adoption of The Paris Agreement.
+BRICS country
+2010-2018 year
+how their electricity usage changed
 
 ## Data resource
 
