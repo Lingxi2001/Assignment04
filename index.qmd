@@ -18,19 +18,64 @@ The Paris Agreement was adopted at the 21st United Nations Climate Change Confer
 
 We refer to the energy data set from Our World In Data to analyze the question. The resource link is: <https://ourworldindata.org/explorers/energy>
 
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
+Step1：Clean the data
 ```{r}
-1 + 1
+library(tidyverse)
+data<-read_csv("data/energy_data.csv")
+data<-data %>% 
+  filter(country=="China"|country=="Brazil"|country=="Russia"|country=="India"|country=="South Africa",
+    year>=2010 & year<=2018,
+    !is.na(population),
+    !is.na(gdp))
 ```
 
-You can add options to executable code like this
+Graph 1:
+BRICS's total electricity generation as share of primary energy between 2010 and 2018
 
 ```{r}
-#| echo: false
-2 * 2
+library(ggplot2)
+data %>% 
+  ggplot()+
+  geom_line(aes(x = year, y= electricity_share_energy, color=(country)))
 ```
+Finding: almost all the countries' electricity's share in energy has increased....
 
-The `echo: false` option disables the printing of code (only output is displayed).
+Graph 2:
+BRICS electricity demand from 2010 to 2018
+
+```{r}
+data %>% 
+ggplot()+
+  geom_boxplot(aes(x=country,y=electricity_demand))
+```
+BRICS country absolute amount of electricity demand: China has the largest demand...(other countries)
+
+Graph 3:
+BRICS's carbon intensity change between 2010 and 2018
+
+```{r}
+data %>% 
+ggplot(aes(x = country, y = carbon_intensity_elec, fill = factor(year))) +
+  geom_bar(stat = "identity", position = "dodge")+
+  labs(x = "Country", 
+       y = "Carbon Intensity of Electricity Generation", fill = "Year") +
+  ggtitle("Carbon Intensity of Electricity for BRICS")
+```
+y Measured in grams of CO₂ equivalents per kilowatt-hour
+Finding: analysis country by country 
+
+Graph 4:
+How BRICS's carbon intensity change with its electricity import from 2010 to 2018
+```{r}
+data %>% 
+ggplot(aes(x = net_elec_imports, y = carbon_intensity_elec, color = factor(country))) +
+  geom_point() +
+  geom_smooth()
+  facet_wrap(~country)
+labs(x = "Net Electricity Imports", y = "Carbon Intensity of Electricity Generation", 
+     title = "Relationship between Carbon Intensity of Electricity Generation \n and Net Electrical Imports \n From 2010 to 2018") +
+  theme(plot.title = element_text(hjust = 0.5), 
+        plot.margin = margin(t = 20, r = 0, b = 20, l = 20))+
+  scale_color_discrete(name = "Country")
+```
+##??I don't know how to lab the year
