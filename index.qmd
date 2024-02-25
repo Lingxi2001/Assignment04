@@ -15,6 +15,9 @@ format:
 BRICS country
 2010-2018 year
 how their electricity usage changed
+- add something about the paris climate accord
+- add something about why we are interested in BRICS
+- add something about why electricy is interesting 
 
 ## Data resource
 
@@ -43,8 +46,11 @@ data %>%
   labs(x = "Year", y = "Electricity as Percent Share of Primary Energy \n(percentage point)", 
      title = "Total Electricity Generation \n as Percentage Share of Total Primary Energy Consumption \n for BRICS Countries from 2010 to 2018")
 ```
-Finding: almost all the countries' electricity's share in energy has increased....
-Total electricity generation as share of primary energy - Measured as a percentage of total, direct primary energy consumption.
+This is a graphic of the total electricity generation as percentage share of 
+direct primary energy consumption across BRICS nations from the year 2010 to 2018. 
+In 2015, these countries signed the Paris Climate Accord and since you can see a 
+steeper increase in Brazil, China, India. South Africa and Russia's share of 
+electricity has remained consistent, though has dropped below 2010 shares in 2018. 
 
 Graph 2:
 BRICS electricity demand from 2010 to 2018
@@ -52,9 +58,17 @@ BRICS electricity demand from 2010 to 2018
 ```{r}
 data %>% 
 ggplot()+
-  geom_boxplot(aes(x=country,y=electricity_demand))
+  geom_boxplot(aes(x=country,y=electricity_demand))+
+   labs(x = "Country", y = "Electricity Demand \n (measured in terawatt-hours)", 
+     title = "Range of Electricy Demand by Country")
 ```
-BRICS country absolute amount of electricity demand: China has the largest demand...(other countries)
+This graph represents BRICS country absolute amount of electricity demand range 
+between 2010 and 2018. China stands out with the largest electricity demand, with 
+with the largest variance over the 18 year period. Brazil, Russia and South Africa
+have almost no variance over the years and hover below 1000 terrewatts per hour.
+Variance is noticable in India. Given that the two countries with highest variance 
+are also the most populated, we hypothesize that population size affects Electricy
+Demand variance. 
 
 Graph 3:
 BRICS's carbon intensity change between 2010 and 2018
@@ -67,8 +81,13 @@ ggplot(aes(x = country, y = carbon_intensity_elec, fill = factor(year))) +
        y = "Carbon Intensity of Electricity Generation", fill = "Year") +
   ggtitle("Carbon Intensity of Electricity for BRICS")
 ```
-y Measured in grams of CO₂ equivalents per kilowatt-hour
-Finding: analysis country by country 
+The Carbon Intensity of Electricity Generation is measured in grams of CO₂ equivalents per kilowatt-hour by country between the years of 2010 to 2018. The ten year range 
+allows us to observe longterm change. Brazil reaches a peak in 2014 and we observe
+a steady decline starting in 2015. In China, the peak is in 2011 followed by a steady decrease. 
+This pattern is also observable in South Africa - the country with the largest 
+carbon intensity, though with a less linear decline. Russia remains stagnant at
+just below 400 grams of C0₂ equivalents per kilowatt-hour. Finally, India has a 
+somewhat consistant, though rising, overall trend in CO₂ equivalents per kilowatt-hour.
 
 Graph 4:
 How BRICS's carbon intensity change with its electricity import from 2010 to 2018
@@ -76,12 +95,18 @@ How BRICS's carbon intensity change with its electricity import from 2010 to 201
 data %>% 
 ggplot(aes(x = net_elec_imports, y = carbon_intensity_elec, color = factor(country))) +
   geom_point() +
-  geom_smooth()
-  facet_wrap(~country)
-labs(x = "Net Electricity Imports", y = "Carbon Intensity of Electricity Generation", 
+  geom_smooth()+
+  geom_text( aes(label = year))+
+    labs(x = "Net Electricity Imports", y = "Carbon Intensity of Electricity Generation", 
      title = "Relationship between Carbon Intensity of Electricity Generation \n and Net Electrical Imports \n From 2010 to 2018") +
   theme(plot.title = element_text(hjust = 0.5), 
         plot.margin = margin(t = 20, r = 0, b = 20, l = 20))+
   scale_color_discrete(name = "Country")
 ```
-##??I don't know how to lab the year
+##I don't think we need year I excluded: facet_wrap(~country) +
+
+Here we observe the relationship of net electricy imports on carbon intensity of 
+electricity generation. As we expected, countries that export more than they 
+export in electricity have lower carbon intesnity of electricity generation.
+Brazil fluctuates below the 250 grams of CO₂ equivalents per kilowatt-hour carbon
+intensity of electricity generation. ** NEED TO RECONSIDER THIS GRAPH* 
