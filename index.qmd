@@ -40,11 +40,14 @@ BRICS's total electricity generation as share of primary energy between 2010 and
 ```{r}
 library(ggplot2)
 data %>% 
-  ggplot()+
-  geom_line(aes(x = year, y= electricity_share_energy, color=(country)))+
-  scale_color_discrete(name = "Country")+
+  ggplot(aes(x = year, y= electricity_share_energy))+
+  geom_line(aes(color=(country)),alpha=0.8,size=0.7)+
+  scale_y_continuous(limit=c(10,23))+
+  theme_minimal()+
   labs(x = "Year", y = "Electricity as Percent Share of Primary Energy \n(percentage point)", 
-     title = "Total Electricity Generation \n as Percentage Share of Total Primary Energy Consumption \n for BRICS Countries from 2010 to 2018")
+       title = "Total Electricity Generation for BRICS Countries",
+       subtitle = "As Percentage Share of Total Primary Energy Consumption from 2010 to 2018",
+       caption="")
 ```
 This is a graphic of the total electricity generation as percentage share of 
 direct primary energy consumption across BRICS nations from the year 2010 to 2018. 
@@ -57,10 +60,13 @@ BRICS electricity demand from 2010 to 2018
 
 ```{r}
 data %>% 
-ggplot()+
-  geom_boxplot(aes(x=country,y=electricity_demand))+
-   labs(x = "Country", y = "Electricity Demand \n (measured in terawatt-hours)", 
-     title = "Range of Electricy Demand by Country")
+ggplot(aes(x=country,y=electricity_demand))+
+  geom_boxplot(aes(color=country),alpha=0.5)+
+  theme_minimal()+
+  theme(plot.caption = element_text(size = 6))+
+  labs(x = "Country", y = "Electricity Demand \n (measured in terawatt-hours)", 
+       title = "Electricy Demand for BRICS from 2010 to 2018",
+       caption="'Energy use per person' - U.S. Energy Information Administration (2023) \n Energy Institute - Statistical Review of World Energy (2023) \n Population based on various sources (2023) via Our World Data \n OurWorldInData.org/energy")
 ```
 This graph represents BRICS country absolute amount of electricity demand range 
 between 2010 and 2018. China stands out with the largest electricity demand, with 
@@ -75,11 +81,14 @@ BRICS's carbon intensity change between 2010 and 2018
 
 ```{r}
 data %>% 
-ggplot(aes(x = country, y = carbon_intensity_elec, fill = factor(year))) +
-  geom_bar(stat = "identity", position = "dodge")+
+ggplot(aes(x = country, y = carbon_intensity_elec,fill = factor(year))) +
+  geom_bar(stat = "identity", position = "dodge", alpha=0.7)+
+  theme_minimal()+
   labs(x = "Country", 
-       y = "Carbon Intensity of Electricity Generation", fill = "Year") +
-  ggtitle("Carbon Intensity of Electricity for BRICS")
+       y = "Carbon Intensity of Electricity Generation", fill = "Year",
+       title="Carbon Intensity of Electricity for BRICS from 2010 to 2018",
+       subtitle="(Carbon intensity of Electricity Generation \n measuered in grams of CO2 equivalents per kilowatt-hour)") 
+
 ```
 The Carbon Intensity of Electricity Generation is measured in grams of CO₂ equivalents per kilowatt-hour by country between the years of 2010 to 2018. The ten year range 
 allows us to observe longterm change. Brazil reaches a peak in 2014 and we observe
@@ -93,15 +102,18 @@ Graph 4:
 How BRICS's carbon intensity change with its electricity import from 2010 to 2018
 ```{r}
 data %>% 
-ggplot(aes(x = net_elec_imports, y = carbon_intensity_elec, color = factor(country))) +
-  geom_point() +
-  geom_smooth()+
-  geom_text( aes(label = year))+
-    labs(x = "Net Electricity Imports", y = "Carbon Intensity of Electricity Generation", 
-     title = "Relationship between Carbon Intensity of Electricity Generation \n and Net Electrical Imports \n From 2010 to 2018") +
+  group_by(country) %>% 
+  ggplot(aes(x = year, y= net_elec_imports)) +
+  geom_point(aes(size=carbon_intensity_elec,color=year),alpha=0.8) +
+  geom_smooth(method="lm", se=F, size=0.5, color="black")+
+  facet_wrap(~country)+
+  labs(x = "Year", y = "Net Electrical Imports", 
+       title = "Relationship between Carbon Intensity of Electricity Generation \n and Net Electrical Imports \n From 2010 to 2018",
+       color = "Year") +
+  theme_minimal()+
   theme(plot.title = element_text(hjust = 0.5), 
         plot.margin = margin(t = 20, r = 0, b = 20, l = 20))+
-  scale_color_discrete(name = "Country")
+  scale_size_continuous(name = "C02 Intensity \n of Elec Gen",range=c(1,12))
 ```
 ##I don't think we need year I excluded: facet_wrap(~country) +
 
