@@ -38,9 +38,13 @@ BRICS's total electricity generation as share of primary energy between 2010 and
 library(ggplot2)
 data %>% 
   ggplot()+
-  geom_line(aes(x = year, y= electricity_share_energy, color=(country)))
+  geom_line(aes(x = year, y= electricity_share_energy, color=(country)))+
+  scale_color_discrete(name = "Country")+
+  labs(x = "Year", y = "Electricity as Percent Share of Primary Energy \n(percentage point)", 
+     title = "Total Electricity Generation \n as Percentage Share of Total Primary Energy Consumption \n for BRICS Countries from 2010 to 2018")
 ```
 Finding: almost all the countries' electricity's share in energy has increased....
+Total electricity generation as share of primary energy - Measured as a percentage of total, direct primary energy consumption.
 
 Graph 2:
 BRICS electricity demand from 2010 to 2018
