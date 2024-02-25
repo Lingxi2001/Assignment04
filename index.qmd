@@ -145,7 +145,6 @@ data %>%
         plot.caption = element_text(size = 6))+
   scale_size_continuous(name = "C02 Intensity \n of Elec Gen",range=c(1,12))
 ```
-##I don't think we need year I excluded: facet_wrap(~country) +
 
 Here we observe the relationship of net electricity imports on carbon intensity of 
 electricity generation. As we expected, countries that import more than they 
@@ -165,4 +164,6 @@ Nations, U. (n.d.). Generating power. United Nations; United Nations. https://ww
 
 
 Data Source:
-'Energy use per person' - U.S. Energy Information Administration (2023) Energy Institute - Statistical Review of World Energy (2023) Population based on various sources (2023) via Our World Data OurWorldInData.org/energy
+'Energy use per person' - U.S. Energy Information Administration (2023) Energy 
+Institute - Statistical Review of World Energy (2023) Population based on various 
+sources (2023) via Our World Data OurWorldInData.org/energy
